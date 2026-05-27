@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Untuk Mini Lucu 🥺</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ffe6e6 0%, #ffc0cb 100%);
+        font-family: "Quicksand", "Arial", sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* WADAH UNTUK BUNGA TUMBUH */
+      #flower-system {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1; /* Di belakang kartu */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100vh;
+        pointer-events: none;
+      }
+
+      /* TANGKAI BUNGA */
+      .stem {
+        width: 8px;
+        background: linear-gradient(to top, #4caf50, #81c784);
+        border-radius: 4px 4px 0 0;
+        height: 0;
+        position: relative;
+        animation: growStem 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+
+      /* DAUN */
+      .leaf {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        opacity: 0;
+        background: linear-gradient(to top right, #4caf50, #81c784);
+        animation: growLeaf 1s forwards;
+      }
+
+      .leaf-left {
+        bottom: 15vh;
+        left: -42px;
+        border-radius: 0 50% 0 50%;
+        transform-origin: bottom right;
+        animation-delay: 0.8s;
+      }
+
+      .leaf-right {
+        bottom: 30vh;
+        right: -42px;
+        border-radius: 50% 0 50% 0;
+        transform-origin: bottom left;
+        animation-delay: 1.3s;
+      }
+
+      @keyframes growStem {
+        0% {
+          height: 0;
+        }
+        100% {
+          height: 50vh;
+        } /* Tumbuh sampai pas di tengah layar */
+      }
+
+      @keyframes growLeaf {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* KEPALA BUNGA (Tempat kelopak mekar) */
+      .flower-head {
+        position: absolute;
+        bottom: 50vh; /* Sesuaikan dengan tinggi maksimal stem */
+        width: 0;
+        height: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* KELOPAK BUNGA BARU */
+      .petal-new {
+        position: absolute;
+        bottom: 0;
+        transform-origin: bottom center;
+        opacity: 0;
+      }
+
+      @keyframes bloomPetalNew {
+        0% {
+          transform: rotate(var(--angle)) scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: rotate(var(--angle)) scale(1.1);
+          opacity: 0.8; /* Transparansi agar tetap elegan */
+        }
+      }
+
+      /* Bintang melayang */
+      .floating-emoji {
+        position: fixed;
+        bottom: -50px;
+        z-index: 3;
+        opacity: 0.7;
+        pointer-events: none;
+        animation: floatUp linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Container / Kartu Utama */
+      .container {
+        text-align: center;
+        background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
+        padding: 35px 25px;
+        border-radius: 25px;
+        border: 3px dashed #ffb3b3;
+        box-shadow:
+          0 15px 35px rgba(255, 102, 102, 0.3),
+          inset 0 0 20px rgba(255, 182, 193, 0.2);
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        z-index: 10;
+        box-sizing: border-box;
+      }
+
+      .container::before {
+        content: "✨";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 24px;
+        opacity: 0.8;
+      }
+      .container::after {
+        content: "🌸";
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        font-size: 24px;
+        opacity: 0.8;
+      }
+
+      img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        background-color: #ffe6e6;
+        border: 4px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        animation: popIn 0.6s ease cubic-bezier(0.175, 0.885, 0.32, 1.275)
+          forwards;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      h1 {
+        color: #ff4d4d;
+        font-size: 22px;
+        margin-top: 5px;
+        margin-bottom: 12px;
+        line-height: 1.4;
+        text-shadow: 1px 1px 2px rgba(255, 77, 77, 0.1);
+      }
+
+      p {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        padding: 0 10px;
+        font-weight: 500;
+      }
+
+      .word {
+        opacity: 0;
+        display: inline-block;
+        transform: translateY(10px);
+        animation: wordFadeIn 0.4s ease forwards;
+      }
+
+      @keyframes wordFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      button {
+        padding: 12px 28px;
+        font-size: 16px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .btn-next {
+        background-color: #ff6680;
+        color: white;
+      }
+      .btn-next:hover {
+        background-color: #ff4d6a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 77, 106, 0.4);
+      }
+
+      .btn-group-final {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        position: relative;
+        height: 50px;
+      }
+
+      #btn-maafin {
+        background-color: #4caf50;
+        color: white;
+        z-index: 11;
+        position: relative;
+      }
+      #btn-maafin:hover {
+        background-color: #45a049;
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+      }
+
+      #btn-nggak {
+        background-color: #ff4d4d;
+        color: white;
+        z-index: 100;
+        transition:
+          left 0.3s ease,
+          top 0.3s ease;
+      }
+
+      .stage {
+        display: none;
+      }
+      .stage.active {
+        display: block;
+      }
+
+      @media (max-width: 350px) {
+        h1 {
+          font-size: 18px;
+        }
+        p {
+          font-size: 14px;
+        }
+        img {
+          width: 120px;
+          height: 120px;
+        }
+        .container {
+          padding: 20px 15px;
+        }
+        button {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="flower-system">
+      <div class="stem">
+        <div class="leaf leaf-left"></div>
+        <div class="leaf leaf-right"></div>
+      </div>
+      <div class="flower-head" id="flower-head"></div>
+    </div>
+
+    <audio id="bg-music" loop>
+      <source src="musikku.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="container">
+      <div class="stage active" id="stage1">
+        <img src="image/you.jpeg" alt="Cat Hello" />
+        <h1 data-text="Hai Mini... 👋🥺"></h1>
+        <p
+          data-text="Maaf ganggu waktunya sebentar ya. Ada sesuatu yang pengen banget aku kasih tau ke kamu. Buka yuk..."
+        ></p>
+        <button class="btn-next" onclick="nextStage(2)">Buka Teksnya ✨</button>
+      </div>
+
+      <div class="stage" id="stage2">
+        <img src="image/you2.jpeg" alt="Cat Sorry" />
+        <h1 data-text="Aku Minta Maaf Ya..."></h1>
+        <p
+          data-text="Jujur, aku sadar kemarin aku udah bikin kamu kesel. Aku bener-bener nyesel dan ngerasa bersalah banget udah bikin mood kamu hancur..."
+        ></p>
+        <button class="btn-next" onclick="nextStage(3)">Lanjut 🥺</button>
+      </div>
+
+      <div class="stage" id="stage3">
+        <img src="image/you3.jpeg" alt="Cat Phone" />
+        <h1 data-text="Maaf Suka Telat Balas "></h1>
+        <p
+          data-text="Aku juga minta maaf ya karena sering banget lama balas chat kamu. Aku tau nunggu itu bosenin dan bikin kepikiran. Maafin kebiasaan jelek aku ini ya..."
+        ></p>
+        <button class="btn-next" onclick="nextStage(4)">Ada Lagi 🥺</button>
+      </div>
+
+      <div class="stage" id="stage4">
+        <img src="image/you4.jpeg" alt="Cat Pleading" />
+        <h1 data-text="Aku Janji Deh!"></h1>
+        <p
+          data-text="Aku beneran janji bakal perbaikin ini dan nggak ngulangin hal bodoh itu lagi. Pengen banget liat kamu senyum ceria lagi kayak biasanya 💕"
+        ></p>
+        <button class="btn-next" onclick="nextStage(5)">
+          Satu Pertanyaan... 👉👈
+        </button>
+      </div>
+
+      <div class="stage" id="stage5">
+        <img src="image/you5.jpeg" alt="Cat Asking" />
+        <h1 data-text="Jadi... Dimaafin Nggak Nih?"></h1>
+        <p
+          data-text="Coba pilih pakai hati kamu yang paling dalem ya (awas loh jangan sampe salah pencet tombolnya 😜)"
+        ></p>
+        <div class="btn-group-final">
+          <button id="btn-maafin" onclick="nextStage(6)">Maafin</button>
+          <button id="btn-nggak" onmouseover="lari()" onclick="lari()">
+            Nggak
+          </button>
+        </div>
+      </div>
+
+      <div class="stage" id="stage6">
+        <img src="image/you6.jpeg" alt="Cat Happy Hug" />
+        <h1 data-text="Yeeeee! Makasih Mini! 🥰❤️"></h1>
+        <p
+          data-text="Makasih banyak ya udah mau kasih aku kesempatan lagi. Kamu tuh emang the best dan paling gemesin sedunia. I love youuu 3000! ✨"
+        ></p>
+      </div>
+    </div>
+
+    <script>
+      // --- LOGIKA JS UNTUK BUNGA TUMBUH & MEKAR ---
+      function createGrowingFlower() {
+        const flowerHead = document.getElementById("flower-head");
+        const numPetals = 12;
+
+        // 1. Layer Kelopak Besar (Luar)
+        for (let i = 0; i < numPetals; i++) {
+          const petal = document.createElement("div");
+          petal.classList.add("petal-new");
+
+          // Styling kelopak besar
+          petal.style.left = "-40px"; // Setengah dari width agar center
+          petal.style.width = "80px";
+          petal.style.height = "250px"; // Cukup besar agar terlihat dari balik card
+          petal.style.background =
+            "linear-gradient(to top, #ff758c 0%, #ff7eb3 100%)";
+          petal.style.borderRadius = "50% 50% 50% 50% / 60% 60% 40% 40%";
+          petal.style.boxShadow = "0 0 15px rgba(255, 117, 140, 0.2)";
+
+          const angle = i * (360 / numPetals);
+          petal.style.setProperty("--angle", `${angle}deg`);
+
+          // Mekar berurutan SETELAH tangkai selesai tumbuh (mulai dari 1.8 detik)
+          petal.style.animation = `bloomPetalNew 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+          petal.style.animationDelay = `${1.8 + i * 0.1}s`;
+
+          flowerHead.appendChild(petal);
+        }
+
+        // 2. Layer Kelopak Kecil (Dalam)
+        for (let i = 0; i < numPetals; i++) {
+          const petal = document.createElement("div");
+          petal.classList.add("petal-new");
+
+          // Styling kelopak kecil
+          petal.style.left = "-25px";
+          petal.style.width = "50px";
+          petal.style.height = "160px";
+          petal.style.background =
+            "linear-gradient(to top, #ff9a9e 0%, #fecfef 100%)";
+          petal.style.borderRadius = "50% 50% 50% 50% / 60% 60% 40% 40%";
+
+          const angle = i * (360 / numPetals) + 15;
+          petal.style.setProperty("--angle", `${angle}deg`);
+
+          // Mekar setelah layer pertama jalan
+          petal.style.animation = `bloomPetalNew 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+          petal.style.animationDelay = `${2.5 + i * 0.1}s`;
+
+          flowerHead.appendChild(petal);
+        }
+      }
+
+      createGrowingFlower();
+
+      // --- DEKORASI ANIMASI EMOJI MELAYANG ---
+      function createDecoration() {
+        const emojis = ["🌸", "💖", "✨", "🌷"];
+        const decor = document.createElement("div");
+        decor.classList.add("floating-emoji");
+        decor.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        decor.style.left = Math.random() * 100 + "vw";
+        decor.style.animationDuration = Math.random() * 4 + 5 + "s";
+        decor.style.fontSize = Math.random() * 15 + 15 + "px";
+        document.body.appendChild(decor);
+        setTimeout(() => {
+          decor.remove();
+        }, 9000);
+      }
+      setInterval(createDecoration, 500);
+
+      // --- ANIMASI TEKS KATA PER KATA ---
+      function animateText(stage) {
+        const elements = stage.querySelectorAll("[data-text]");
+        elements.forEach((el) => {
+          const text = el.getAttribute("data-text");
+          el.innerHTML = "";
+          const words = text.split(" ");
+          words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.innerHTML = word + "&nbsp;";
+            span.classList.add("word");
+            span.style.animationDelay = index * 0.1 + "s";
+            el.appendChild(span);
+          });
+        });
+      }
+
+      // --- LOGIKA HALAMAN & MUSIK ---
+      let musicPlayed = false;
+
+      function nextStage(stageNumber) {
+        if (!musicPlayed) {
+          const audio = document.getElementById("bg-music");
+          audio
+            .play()
+            .catch((err) => console.log("Musik butuh klik tambahan."));
+          musicPlayed = true;
+        }
+
+        document.querySelectorAll(".stage").forEach((stage) => {
+          stage.classList.remove("active");
+        });
+
+        const targetStage = document.getElementById("stage" + stageNumber);
+        if (targetStage) {
+          targetStage.classList.add("active");
+          animateText(targetStage);
+        }
+      }
+
+      window.onload = () => {
+        const stage1 = document.getElementById("stage1");
+        animateText(stage1);
+      };
+
+      // --- LOGIKA TOMBOL LARI ---
+      function lari() {
+        const tombolNggak = document.getElementById("btn-nggak");
+        const btnWidth = tombolNggak.offsetWidth;
+        const btnHeight = tombolNggak.offsetHeight;
+        const maxX = window.innerWidth - btnWidth - 20;
+        const maxY = window.innerHeight - btnHeight - 20;
+        const minX = 20;
+        const minY = 20;
+
+        const randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+        const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+
+        tombolNggak.style.position = "fixed";
+        tombolNggak.style.left = randomX + "px";
+        tombolNggak.style.top = randomY + "px";
+      }
+    </script>
+  </body>
+</html>
